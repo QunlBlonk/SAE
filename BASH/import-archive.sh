@@ -1,0 +1,65 @@
+#!/bin/bash
+
+nom=$(basename ${1})
+
+
+if [ ! -d .sh-toolbox ]; then #regarde si .sh-toolbox existe
+	echo ".sh-toolbox n'existe pas"
+	exit 1
+fi
+if [ ! -d ${1} ] && [ ! -f ${1} ]; then #regarde si le fichier/dossier à copier existe
+	echo "l'archive n'existe pas"
+	exit 2
+fi
+
+
+
+if [ ! -f .sh-toolbox/$nom ]; then #regarde si l'archive est dans .sh-toolbox
+	cp ${1} .sh-toolbox #si oui le copie
+	if [ $? -ne 0 ]; then
+		echo "problème de copie"
+		exit 3
+	fi
+	
+	
+	nbrL=`ls .sh-toolbox | wc -l`
+	let "nbrL=nbrL-1"
+	
+	
+	echo `sed -s "1c\$nbrL" .sh-toolbox/archives` >> .sh-toolbox/archives
+	echo `sed -s "1d" .sh-toolbox/archives` >> .sh-toolbox/archives
+	
+	echo "$nom:$(date '+%Y%m%d-%H%M%S'):" >> .sh-toolbox/archives
+	
+	nbrLA=`cat .sh-toolbox/archives | wc -l`
+	let "nbrLA=nbrLA/2"
+
+	if [ $nbrLA -ne $nbrL ]; then #regarde si archive à bien pris +1
+		echo "la mise à jour de l'archive à rencontré un problème"
+		exit 4
+	fi
+else
+	
+	echo "voulez vous écraser ce fichier ? (y/n)"
+	if ! cp -i ${1} .sh-toolbox 2>log_file; then
+		echo "la copie à rencontré un problème"
+		exit 3
+	fi
+
+		
+
+fi
+
+
+
+if [ ! -d .sh-toolbox/$nom ] && [ ! -f .sh-toolbox/$nom ]; then #regarde si la copie à bien été faite
+	echo "la copie à rencotnré un problème"
+	exit 3
+fi
+	
+
+
+
+
+
+exit 0
