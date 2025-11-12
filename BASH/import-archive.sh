@@ -25,14 +25,22 @@ if [ ! -f .sh-toolbox/$nom ]; then #regarde si l'archive est dans .sh-toolbox
 	nbrL=`ls .sh-toolbox | wc -l`
 	let "nbrL=nbrL-1"
 	
-	
-	echo `sed -s "1c\$nbrL" .sh-toolbox/archives` >> .sh-toolbox/archives
-	echo `sed -s "1d" .sh-toolbox/archives` >> .sh-toolbox/archives
+	fichier=`sed -s "1d" .sh-toolbox/archives`
+	echo $nbrL > .sh-toolbox/archives
+	cat << TAG >> .sh-toolbox/archives
+$fichier 
+TAG
 	
 	echo "$nom:$(date '+%Y%m%d-%H%M%S'):" >> .sh-toolbox/archives
+	if [ $nbrL -eq 1 ];then
+		fichier=`sed -s "2d" .sh-toolbox/archives`
+		cat << TAG > .sh-toolbox/archives
+$fichier 
+TAG 	
+	fi
 	
 	nbrLA=`cat .sh-toolbox/archives | wc -l`
-	let "nbrLA=nbrLA/2"
+	let "nbrLA=nbrLA-1"
 
 	if [ $nbrLA -ne $nbrL ]; then #regarde si archive à bien pris +1
 		echo "la mise à jour de l'archive à rencontré un problème"
