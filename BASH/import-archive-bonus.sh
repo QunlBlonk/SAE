@@ -29,27 +29,34 @@ while [ $# -ne 0 ]; do
 		fi
 		
 		
-		nbrL=`ls .sh-toolbox | wc -l`
-		let "nbrL=nbrL-1"
+		nbr=`wc -l .sh-toolbox/archives | cut -d ' ' -f 1`
+		let "nbr=nbr-1"
 		
-		fichier=`sed -s "1d" .sh-toolbox/archives`
-		echo $nbrL > .sh-toolbox/archives
-		cat << TAG >> .sh-toolbox/archives
-$fichier 
-TAG
-		
-		echo "$nom:$(date '+%Y%m%d-%H%M%S'):" >> .sh-toolbox/archives
-		if [ $nbrL -eq 1 ];then
-			fichier=`sed -s "2d" .sh-toolbox/archives`
+		if [ $nbr -eq 0 ]; then
+			cat << TAG2 > .sh-toolbox/archives
+1		
+TAG2
+			
+		else
+			let "nbr=nbr+1"
+			fichier=`sed -s "1d" .sh-toolbox/archives`
 			cat << TAG > .sh-toolbox/archives
+$nbr
 $fichier 
 TAG
 		fi
 		
+		
+		
+		
+		
+		
+		echo "$nom:$(date '+%Y%m%d-%H%M%S'):" >> .sh-toolbox/archives
+		
+		
 		nbrLA=`cat .sh-toolbox/archives | wc -l`
 		let "nbrLA=nbrLA-1"
-
-		if [ $nbrLA -ne $nbrL ]; then #regarde si archive à bien pris +1
+		if [ $nbr -ne $nbrLA ]; then #regarde si archive à bien pris +1
 			echo "la mise à jour de l'archive à rencontré un problème"
 			exit 4
 		fi
