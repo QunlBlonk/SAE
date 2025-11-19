@@ -42,13 +42,22 @@ if [ $code_erreur -eq 3 ]; then
 			done
 			if [ $var3 = "y" ]; then
 				fichier=`sed -s "${i}d" .sh-toolbox/archives`
-				echo $fichier > .sh-toolbox/archives
-				echo "$taille"
+				cat << TAG > .sh-toolbox/archives
+$fichier				
+TAG
+				fichier=`sed -s "1d" .sh-toolbox/archives`
 				newTaille=0
-				let "newTaille=taille-2"
-				sed -i "1c$newTaille" .sh-toolbox/archives
+				let "newTaille=taille-3"
+				cat << TAG > .sh-toolbox/archives
+$newTaille
+$fichier				
+TAG
+				
+				
 			fi
 		fi
 		let "i=i+1"
 	done
+	
+
 fi
