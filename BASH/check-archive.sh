@@ -18,7 +18,14 @@ while [ "$bienUnChiffre" != "ouichiffre" ]; do
 done
 
 let "rep=rep+1"
-echo $rep
 
 echo -n "vous avez choisis l'archive "
-echo | sed -n ${rep}p .sh-toolbox/archives
+archive_choisis=`sed -n ${rep}p .sh-toolbox/archives | sed -E 's/(.*):.*:.*/\1/'`
+if [ ! -e "./temp" ]; then
+        mkdir temp
+fi
+echo $archive_choisis
+tar -xzf $archive_choisis -C "./temp"
+if [ $? -eq 0 ]; then
+        echo "archibe décomprésé"
+fi
