@@ -64,5 +64,18 @@ EXIT:
 aucun exit
 
 5. check-archive.sh
+"check-archive.sh permet de trouver les fichiers attaqués et ce toujours sains.
+en début on demande qu'elle archive on veut décomprésés
+si elle est décompressable (.tar.gz) alros on la décompresse dans un dossier temporaire temp
+si temp existe déjà on demande si l'utilisateur veut le supprimer pour le recréer
+une fois le dossier décompréssés on regarde quand l'attaque a été effecuté (dernière connexion de admin)
+puis on affiche tout les dossiers qui ont était modifiés après la date de l'attaque"
 
+EXIT:
+0 si toutes les opérations ont réussies
+1 si le dossier .sh-toolbox n’existe pas
+2 si le fichier archives n’existe pas
+3 si la décompression a échoué
+4 si le fichier des logs est manquant
+5 si le dossier de données est vide
 
