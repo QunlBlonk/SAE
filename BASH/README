@@ -21,3 +21,19 @@ EXIT:
 1 si le dossier et/ou le fichier n’a pas pu être créé
 2 si le dossier contient d’autres fichiers (avec ou sans dossiers)
 
+
+2. imports-archive.sh
+"imports-archive.sh permet d'importer des archives, on en voie en paramètres le ou les fichiers que l'on veut archivés
+si ils ne sont pas déjà archivés, ils sont copiés dans .sh-toolbox
+sinon on demande à l'utilisateur si il veut tout ce même copier en écrasant l'archives précédentes
+une fois copier, on rajoute la mention dans le fichier arcvhives.
+(il éxiste l'option -f QU'IL FAUT METTRE en première position pour forcer la copie en passant la demande de la copie si l'archives existe déjà)"
+
+EXIT:
+0 si la copie a été faite
+0 si la copie a été annulée (l’utilisateur répond « non » à la demande de confirmation)
+1 si le dossier .sh-toolbox n’existe pas
+2 si l’archive n’existe pas au chemin passé en paramètre
+3 si un problème a eu lieu au moment de la copie
+4 si un problème a eu lieu à la mise à jour du fichier .archives
+
