@@ -80,7 +80,7 @@ date_perso=` date '+%Y-%m-%d %T'`
 date_admin=`date "+%Y-$date_admin"`
 let "distance=($(date -d "$date_perso" +%s) - $(date -d "$date_admin" +%s))/86400"
 
-echo $date_admin
+echo "dernière connexion de l'admin : $date_admin"
 echo "voilà les fichiers décomprésé posterieur à la dernière connexion d'admin : "
 post_modif_fich=`find temp -mtime $distance -type f`
 find temp -mtime $distance -type f
