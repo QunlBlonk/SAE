@@ -1,4 +1,23 @@
 Bonjour dans ce petit README des fichiers
 si vous avez des doutes sur l'un des programmes, des commentaires sont aussi présents dans chaque fichiers
 
-SOMMAIRE
+SOMMAIRE:
+1. innit-toolbox.sh
+2. imports-archive.sh
+3. ls-toolbox.sh
+4. restore-toolbox.sh
+5. check-archive.sh
+
+
+1. innit-toolbox.sh
+"innit-toolbox.sh sert à initialiser l'environnment pour une bonne utilisation des autres fichiers.
+Il s'assure que .sh-toolbox (le dossier dans lequel les archives sont stoqués)
+et archives (le fichier dans lequel on stoques toutes les reférences au fichier/dossier stoqués dans .sh-toolbox)
+soient bien présentes et sinon les créer"
+
+EXIT:
+0 si le dossier et/ou le fichier a été créé avec succès
+0 si le dossier existe déjà et qu’il contient le fichier .archives
+1 si le dossier et/ou le fichier n’a pas pu être créé
+2 si le dossier contient d’autres fichiers (avec ou sans dossiers)
+
