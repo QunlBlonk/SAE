@@ -2,11 +2,11 @@ Bonjour dans ce petit README des fichiers
 si vous avez des doutes sur l'un des programmes, des commentaires sont aussi présents dans chaque fichiers
 
 SOMMAIRE:
-1. innit-toolbox.sh
-2. imports-archive.sh
-3. ls-toolbox.sh
-4. restore-toolbox.sh
-5. check-archive.sh
+1. innit-toolbox.sh (12 - 22)
+2. imports-archive.sh (25 - 39)
+3. ls-toolbox.sh (41 - 54)
+4. restore-toolbox.sh (56 - 64)
+5. check-archive.sh (66 -
 
 
 1. innit-toolbox.sh
@@ -27,7 +27,8 @@ EXIT:
 si ils ne sont pas déjà archivés, ils sont copiés dans .sh-toolbox
 sinon on demande à l'utilisateur si il veut tout ce même copier en écrasant l'archives précédentes
 une fois copier, on rajoute la mention dans le fichier arcvhives.
-(il éxiste l'option -f QU'IL FAUT METTRE en première position pour forcer la copie en passant la demande de la copie si l'archives existe déjà)"
+(il éxiste l'option -f QU'IL FAUT METTRE en première position pour forcer la copie en passant la demande de la copie si l'archives existe déjà
+cependant si -f n'est pas en première position, les fichiers précédent le -f seront quand même importés)"
 
 EXIT:
 0 si la copie a été faite
@@ -36,4 +37,32 @@ EXIT:
 2 si l’archive n’existe pas au chemin passé en paramètre
 3 si un problème a eu lieu au moment de la copie
 4 si un problème a eu lieu à la mise à jour du fichier .archives
+
+3. ls-toolbox.sh
+"ls-toolbox.sh affiche toutes les mentions d'archives du fichier archives et si ils possèdent une clef.
+ls-toolbox.sh sert aussi à savoir si un problème est présent :
+soit une mention d'archives existe sans que l'archives soit stoqués
+soit une archives est présentes dans .sh-toolbox mais il n'y a aucune mention dans le ficheir archives.
+soit .sh-toolbox existe pas
+soit le fichier archives n'existe pas"
+
+EXIT:
+0 si la liste a été affichée sans erreur
+1 si le dossier .sh-toolbox n’existe pas
+2 si le fichier archives n’existe pas
+3 si une archive mentionnée dans le fichier archives n’existe pas
+3 si une archive existe sans être mentionnée dans le fichier archives
+
+4. restore-toolbox.sh
+"restore-toolbox.sh est en quelque sort similaire à innit-toolbox.sh. Il sert à rénitialiser et corriger tout les problèmes
+demande de créer .sh-toolbox si il n'existe pas
+demande de créer le fichiers archives si il n'existe pas
+demande si il veut mentionner une archive présentes dans le dossier .sh-toolbox mais pas mentionnés dans le fichier archive
+demande si il veut supprimer la mention d'une archive qui n'est pas présentes dans le dossier .sh-toolbox"
+
+EXIT:
+aucun exit
+
+5. check-archive.sh
+
 
