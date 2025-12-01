@@ -7,17 +7,19 @@ code_erreur="$?"
 if [ $code_erreur -eq 1 ]; then
         echo "voulez vous créer le dossier .sh-toolbox ? (y/n)"
         read var1
-        while [ $var1 != "y" ] || [ $var1 != "n" ]; do
+        while [ $var1 != "y" ] && [ $var1 != "n" ]; do
                 echo "ti est con ma parole, j'ai dit y ou n"
                 read var1
+                echo $var1
         done
         if [ $var1 = "y" ]; then
                 mkdir .sh-toolbox
         fi
-else if [ $code_erreur -eq 2 ]; then
+fi
+if [ $code_erreur -eq 2 ] || [ $code_erreur -eq 1 ]; then
         echo "voulez vous créer le fichier archives ? (y/n)"
         read var2
-        while [ $var2 != "y" ] || [ $var2 != "n" ]; do
+        while [ $var2 != "y" ] && [ $var2 != "n" ]; do
                 echo "ti est con ma parole, j'ai dit y ou n"
                 read var2
         done
@@ -26,7 +28,7 @@ else if [ $code_erreur -eq 2 ]; then
                 echo 0 > .sh-toolbox/archives
         fi
 fi
-fi
+
 if [ $code_erreur -eq 3 ]; then
         i=2
         taille=`wc -l < .sh-toolbox/archives`
@@ -48,10 +50,10 @@ TAG
                                 fichier=`sed -s "1d" .sh-toolbox/archives`
                                 newTaille=0
                                 let "newTaille=taille-3"
-                                cat << TAG > .sh-toolbox/archives
+                                cat << TAG1 > .sh-toolbox/archives
 $newTaille
 $fichier
-TAG
+TAG1
 
 
                         fi
@@ -72,6 +74,7 @@ TAG
                         t=1
                         while [ $parcours_archive -lt $taille_archive ]; do
                                 nom_archive=`sed -n ${parcours_archive}p .sh-toolbox/archives | cut -d ":" -f 1 `
+                                echo "nom arch: $nom_archive , nom fich: $nom_fich"
                                 if [ $nom_fich == $nom_archive ]; then
                                         let "j=j+1"
                                         t=0
