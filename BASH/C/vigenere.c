@@ -52,6 +52,24 @@ char * chifrement(char * mot, char * clef, char tabVigenere[][64]){
     return motChiffre;
 }
 
+char * dechiffrement(char * mot, char * clef, char tabVigenere[][26]){
+    int i = 0;
+    char * motLower = lowerStr(mot); char * clefLower = lowerStr(clef);
+
+    char * motChiffre = (char *) calloc(longstr(mot),sizeof(char));
+    int longeurClef = longstr(clef)-1;
+
+    while (motLower[i] != 0 && i < 50){
+        int j =0;
+        while(tabVigenere[clefLower[i % longeurClef] - 97][j] != motLower[i]) j++;
+        motChiffre[i] = 97 + j;
+
+        i++;
+    }
+    motEqualiser(mot, motChiffre);
+    return motChiffre;
+}
+
 
 int main(int argc, char * argv[]){
 	if (argc > 3){printf("trop d'argument passé en paramètre\n");return 1;}
