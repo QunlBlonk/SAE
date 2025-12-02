@@ -22,13 +22,17 @@ EXIT:
 2 si le dossier contient d’autres fichiers (avec ou sans dossiers)
 
 
-2. imports-archive.sh
+2. imports-archive.sh [option] fichier
 "imports-archive.sh permet d'importer des archives, on en voie en paramètres le ou les fichiers que l'on veut archivés
 si ils ne sont pas déjà archivés, ils sont copiés dans .sh-toolbox
 sinon on demande à l'utilisateur si il veut tout ce même copier en écrasant l'archives précédentes
 une fois copier, on rajoute la mention dans le fichier arcvhives.
 (il éxiste l'option -f QU'IL FAUT METTRE en première position pour forcer la copie en passant la demande de la copie si l'archives existe déjà
 cependant si -f n'est pas en première position, les fichiers précédent le -f seront quand même importés)"
+
+OPTION:
+(les options doivent être mises en première position)
+-f : force la copie des archives passé en paramètre
 
 EXIT:
 0 si la copie a été faite
