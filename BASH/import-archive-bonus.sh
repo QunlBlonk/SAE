@@ -76,7 +76,8 @@ TAG
 			echo "la mise à jour de l'archive à rencontré un problème"
 			exit 4
 		fi
-	else
+		
+	else #si l'achive est présente dans .sh-toolbox
 		
 		if [ $forcage -eq 0 ]; then
 			echo "voulez vous écraser ce fichier ? (y/n)"
