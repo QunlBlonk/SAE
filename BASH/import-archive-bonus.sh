@@ -21,7 +21,7 @@ fi
 while [ $# -ne 0 ]; do
 	nom=$(basename ${1})
 
-	#test si l'archive est dans .sh-toolbox
+	#test si l'archive est pas dans .sh-toolbox
 	if [ ! -f .sh-toolbox/$nom ]; then 
 	
 		#copie le fichier dans .sh-toolbox
