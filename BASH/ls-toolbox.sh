@@ -1,14 +1,17 @@
 #!/bin/bash
 
+#test si le dossier .sh-toolbox existe
 if [ ! -e .sh-toolbox ]; then
 	echo "le dossier .sh-toolbox n'existe pas"
 	exit 1
 fi 
 
+#test si le fichier archives existe
 if [ ! -e .sh-toolbox/archives ]; then
 	echo "le fichier archives n'existe pas"
 	exit 2
-fi 
+fi
+
 f=0
 i=2
 taille=`wc -l < .sh-toolbox/archives`
