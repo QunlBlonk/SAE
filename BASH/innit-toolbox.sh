@@ -1,35 +1,29 @@
 #!/bin/bash
 
-    if [ ! -d .sh-toolbox ]; then #check si le dossier .sh-toolobx existe pas
+    if [ ! -d .sh-toolbox ]; then
     	echo "le dossier en question va être créé"
-    	mkdir .sh-toolbox #si  vrai, le créer
-        if [ $? -ne 0 ]; then
-            echo "mkdir a rencontré un problème"
-            exit 1
-        fi
+    	mkdir .sh-toolbox
     else
-    	if [ ! -d .sh-toolbox ]; then #check si le dossier existe bien arpès la commande mkdir
+    	if [ ! -d .sh-toolbox ]; then
     		exit 1;
     	fi
     fi
     
     
-    if [ ! -f .sh-toolbox/archives ]; then #check si le fichier archives existe pas
+    if [ ! -f .sh-toolbox/archives ]; then
     	echo "le fichier archives va être créé"
-    	touch .sh-toolbox/archives #si vrai, le créer
-        if [ $? -ne 0 ]; then
-            echo "touch a rencontré un problème"
-            exit 1
-        fi
+    	touch .sh-toolbox/archives
+	    echo 0 > .sh-toolbox/archives
     else
-    	if [ ! -f .sh-toolbox/archives ]; then #check si le fichier existe bien arpès la commande touch
+    	if [ ! -f .sh-toolbox/archives ]; then
     		exit 1
     	fi
     fi
     
-    if [ `ls .sh-toolbox | wc -l` -ne 1 ]; then #check si il y a plus d'un fichier (archives de base) dans le dossier
+    if [ `ls .sh-toolbox | wc -l` -ne 1 ];then
+	echo "des fichiers existent déjà sur dans le dossier archives"
     	exit 2;
     fi
     
     exit 0;
-    
+
