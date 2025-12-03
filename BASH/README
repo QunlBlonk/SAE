@@ -84,4 +84,5 @@ EXIT:
 5 si le dossier de données est vide
 6 si le fichier que l'utilisateur veut décomprésé n'est pas un .tar.gz
 7 si il y a 0 archives mentionner dans le fichier archive
+8 si il n'y a aucun fichier intact trouver
 
