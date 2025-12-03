@@ -3,6 +3,10 @@
     if [ ! -d .sh-toolbox ]; then #check si le dossier .sh-toolobx existe pas
     	echo "le dossier en question va être créé"
     	mkdir .sh-toolbox #si  vrai, le créer
+        if [ $? -ne 0 ]; then
+            echo "mkdir a rencontré un problème"
+            exit 1
+        fi
     else
     	if [ ! -d .sh-toolbox ]; then #check si le dossier existe bien arpès la commande mkdir
     		exit 1;
@@ -13,6 +17,10 @@
     if [ ! -f .sh-toolbox/archives ]; then #check si le fichier archives existe pas
     	echo "le fichier archives va être créé"
     	touch .sh-toolbox/archives #si vrai, le créer
+        if [ $? -ne 0 ]; then
+            echo "touch a rencontré un problème"
+            exit 1
+        fi
     else
     	if [ ! -f .sh-toolbox/archives ]; then #check si le fichier existe bien arpès la commande touch
     		exit 1
