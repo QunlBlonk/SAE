@@ -148,6 +148,7 @@ TAG
 	done
 fi
 
+#teste et corrige si le chiffre en début de fichier archive est égal aux nombres de mentions
 taille_archive=`wc -l .sh-toolbox/archives | cut -d " " -f 1`
 let "taille_archive=taille_archive-1"
 nombre_mention=`sed -n "1p" .sh-toolbox/archives`
