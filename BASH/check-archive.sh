@@ -99,14 +99,14 @@ date_admin=`cat temp/var/log/auth.log | grep ' admin ' | sed -n ${dernier_ligne}
 #extrait le mois de l'attaque
 mois=`echo $date_admin | cut -d ' ' -f 1`
 
-#transforme le mois en lettre en chiffres utilisables
+#transforme le mois en lettre, en chiffres utilisables
 list_mois="Jan=01 Feb=02 Mar=03 Apr=04 May=05 Jun=06 Jul=07 Aug=08 Sep=09 Oct=10 Nov=11 Dec=12"
 mois_en_chiffres=`echo $list_mois | sed -E "s/.* ${mois}=([0-9]{2}) .*/\1/"`
 date_admin=`echo $date_admin | sed -E "s/.* ([0-9]{2}) (.*)/${mois_en_chiffres}-\1 \2/"`
 
 #compare la date de l'attaque et la date actuelle pour trouver depuis comebien de jour l attaque a été effectué
 date_perso=` date '+%Y-%m-%d %T'`
-date_admin=`date "+%Y-$date_admin"` #on rajoute l'année à la date pour pouvoir comparer
+date_admin=`date "+%Y-$date_admin"` #on rajoute l'année à la date admin pour pouvoir comparer
 let "distance=($(date -d "$date_perso" +%s) - $(date -d "$date_admin" +%s))/86400"
 
 echo "dernière connexion de l'admin : $date_admin"
