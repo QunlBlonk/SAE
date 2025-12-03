@@ -65,7 +65,7 @@ demande si il veut mentionner une archive présentes dans le dossier .sh-toolbox
 demande si il veut supprimer la mention d'une archive qui n'est pas présentes dans le dossier .sh-toolbox"
 
 EXIT:
-aucun exit
+0 tout ces bien passé
 
 5. check-archive.sh
 "check-archive.sh permet de trouver les fichiers attaqués et ce toujours sains.
