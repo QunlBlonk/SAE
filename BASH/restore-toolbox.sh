@@ -161,3 +161,4 @@ $taille_archive
 $all_mentions
 TAG
 fi
+exit 0
