@@ -47,7 +47,7 @@ echo "vous avez choisis l'archive : $archive_choisis"
 
 #on s assure que le fichier choisis est bien un fichier .tar.gz que l'on peut décomprésé
 if [ ! `echo $archive_choisis | cut  -d '.' -f 2` == "tar" ]; then
-        echo "on ne peut pas décompresser non compressé"
+        echo "on ne peut pas décompresser ce dossier, ce n'est pas un .tar.gz"
         exit 6
 fi
 
