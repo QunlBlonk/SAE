@@ -33,7 +33,7 @@ char * comp(char * mot, char * motChiffre, char tabVigenere[][64]){
 	char alphabet_base64[64]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
 	int i=0
 	char k=""
-	while (mot[î] || motChiffre[i] != 0){
+	while (mot[i] || motChiffre[i] != 0){
 		k=alphabet_base64[placement_alphabet[motChiffre[i]]-placement_alphabet[mot[i]]];
 		printf(%s,k);
 	}
