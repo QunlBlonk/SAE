@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char alphabet_base64[64]="123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/.";
-int taille_alphabet=64;
 
 int placement_alphabet(char lettre){
+	char alphabet_base64[64]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
+	
     int indice = 0;
     while (lettre != alphabet_base64[indice]){
     	indice=indice+1;
@@ -20,14 +20,6 @@ int longstr(char * mot){
     return i+1;
 }
 
-void printStr(char * mot){
-    int i = 0;
-    while (mot[i] != 0){
-        printf("%c", mot[i]);
-        i++;
-    }
-    printf("\n");
-}
 
 
 void vigenere(char tableau[][64]){
@@ -40,6 +32,8 @@ void vigenere(char tableau[][64]){
 
 
 char * chifrement(char * mot, char * clef, char tabVigenere[][64]){
+    char alphabet_base64[64]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
+    
     int i = 0;
     char * motChiffre = (char *) calloc(longstr(mot),sizeof(char));
     int longeurClef = longstr(clef)-1;
@@ -48,41 +42,47 @@ char * chifrement(char * mot, char * clef, char tabVigenere[][64]){
         motChiffre[i] = alphabet_base64[tabVigenere[placement_alphabet(mot[i])][placement_alphabet(clef[i%longeurClef])]];
         i++;
     }
-    //motEqualiser(mot, motChiffre);
     return motChiffre;
 }
 
-char * dechiffrement(char * mot, char * clef, char tabVigenere[][26]){
+char * dechiffrement(char * mot, char * clef, char tabVigenere[][64]){
+	char alphabet_base64[64]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
+	
     int i = 0;
-    char * motLower = lowerStr(mot); char * clefLower = lowerStr(clef);
-
     char * motChiffre = (char *) calloc(longstr(mot),sizeof(char));
     int longeurClef = longstr(clef)-1;
 
-    while (motLower[i] != 0 && i < 50){
+    while (mot[i] != 0){
         int j =0;
-        while(tabVigenere[clefLower[i % longeurClef] - 97][j] != motLower[i]) j++;
-        motChiffre[i] = 97 + j;
+        while(tabVigenere[placement_alphabet(clef[i % longeurClef])][j] != placement_alphabet(mot[i])) {
+        	j++;
+        	
+        }
+        motChiffre[i] = alphabet_base64[j];
 
         i++;
     }
-    motEqualiser(mot, motChiffre);
     return motChiffre;
 }
 
 
 int main(int argc, char * argv[]){
+	
+	int taille_alphabet=64;
+	
 	if (argc > 3){printf("trop d'argument passé en paramètre\n");return 1;}
 	if (argc < 3){printf("pas assez d'argument passé en paramètre\n");return 1;}
 	
 	char tab_vigenere[64][64];
 	vigenere(tab_vigenere);
 	char * clef = argv[1];
-    	char * mot = argv[2];
-    	char * motChiffre;
+    char * mot = argv[2];
+    char * motChiffre;
 	motChiffre = chifrement(mot, clef,tab_vigenere);
-    	printStr(mot);
-    	printStr(motChiffre);
+    printf("%s\n",mot);
+    printf("%s\n",motChiffre);
+    motChiffre = dechiffrement(motChiffre, clef,tab_vigenere);
+    printf("%s\n",mot);
+    printf("%s\n",motChiffre);
 	return 0;
 }
-
