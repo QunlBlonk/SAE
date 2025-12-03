@@ -47,7 +47,7 @@ echo "vous avez choisis l'archive : $archive_choisis"
 
 #on s assure que le fichier choisis est bien un fichier .tar.gz que l'on peut décomprésé
 if [ ! `echo $archive_choisis | cut  -d '.' -f 2` == "tar" ]; then
-        echo "on ne peut pas décompresser ce dossier, ce n'est pas un .tar.gz"
+        echo "on ne peut pas décompresser non compressé"
         exit 6
 fi
 
@@ -150,5 +150,6 @@ done
 #si on ne trouve aucun fichier intact alors on le dit à l'utilisateur
 if [ $not_found -eq 0 ]; then
 	echo "aucun dossier intact trouver"
+	exit 8
 fi
 exit 0
