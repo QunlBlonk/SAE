@@ -31,12 +31,14 @@ void vigenere(char tableau[][64]){
 }
 
 
-char * chifrement(char * mot, char * clef, char tabVigenere[][64]){
+char * chifrement(char * mot, FILE * clef, char tabVigenere[][64]){
     char alphabet_base64[64]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
     
     int i = 0;
     char * motChiffre = (char *) calloc(longstr(mot),sizeof(char));
-    int longeurClef = longstr(clef)-1;
+	clef=fopen("clef","rt");
+	fseek(clef, 0, SEEK_END);
+    int longeurClef = ftell(clef);
 
     while (mot[i] != 0){
         motChiffre[i] = alphabet_base64[tabVigenere[placement_alphabet(mot[i])][placement_alphabet(clef[i%longeurClef])]];
@@ -45,12 +47,14 @@ char * chifrement(char * mot, char * clef, char tabVigenere[][64]){
     return motChiffre;
 }
 
-char * dechiffrement(char * mot, char * clef, char tabVigenere[][64]){
+char * dechiffrement(char * mot, FILE * clef, char tabVigenere[][64]){
 	char alphabet_base64[64]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/";
 	
     int i = 0;
     char * motChiffre = (char *) calloc(longstr(mot),sizeof(char));
-    int longeurClef = longstr(clef)-1;
+    clef=fopen("clef","rt");
+	fseek(clef, 0, SEEK_END);
+    int longeurClef = ftell(clef);
 
     while (mot[i] != 0){
         int j =0;
