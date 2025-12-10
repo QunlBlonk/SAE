@@ -1,0 +1,27 @@
+
+all : prog prog_cipher
+
+prog : main.o librairie.a
+	gcc $^ -o prog
+
+prog_cipher : cipher.o librairie.a
+	gcc $^ -o prog_cipher
+
+
+cipher : cipher.c
+	gcc -o cipher cipher.c 
+	
+librairie.a : statique.o
+	ar rcs librairie.a statique.o
+
+statique.o : statique.c statique.h
+	gcc -c statique.c 
+
+main.o : main.c
+	gcc -c main.c
+
+cipher.o : cipher.c
+	gcc -c cipher.c
+
+clean :
+	rm -f *.o *.a prog
