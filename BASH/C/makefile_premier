@@ -1,0 +1,11 @@
+
+prog : cipher decipher findkey
+
+cipher : cipher.c
+	gcc -o cipher cipher.c 
+	
+decipher : decipher.c
+	gcc -o decipher decipher.c
+	
+findkey : findkey.c
+	gcc -o findkey findkey.c 
