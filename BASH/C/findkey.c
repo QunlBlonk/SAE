@@ -32,17 +32,15 @@ char * findKey(char * nom_fichierClean, char * nom_fichierCorrompu){
     int lettreClean = placement_alphabet(fgetc(fichierClean)); int lettreCorrompu = placement_alphabet(fgetc(fichierCorrompu));
     
     int diffLettre = (lettreCorrompu-lettreClean + 64)%64;
-    printf("%c %c %c\n", alphabet_base64[lettreClean], alphabet_base64[lettreCorrompu], alphabet_base64[diffLettre]);
     
     clef[ci] = diffLettre; ci++;
     lettreClean = placement_alphabet(fgetc(fichierClean)); lettreCorrompu = placement_alphabet(fgetc(fichierCorrompu));
     diffLettre = (lettreCorrompu-lettreClean + 64)%64;
     while(cti < 1024 && lettreClean != EOF && lettreClean != -1){
 
-       printf("%c %c %c\n", alphabet_base64[lettreClean], alphabet_base64[lettreCorrompu], alphabet_base64[diffLettre]);
         if (diffLettre == clef[pci]){
             clefTemp[cti] = diffLettre; 
-            pci++;
+            pci++; cti++;
             if (pci >= ci) pci = 0;
         }else{
             for(pcti=0; pcti < cti; pcti++){
@@ -51,8 +49,12 @@ char * findKey(char * nom_fichierClean, char * nom_fichierCorrompu){
             }
             clef[ci]=diffLettre;
 
-
+		
             cti=0; ci++;pci = 0;
+             for(int i=0; i < ci; i++){
+       	
+        
+    }
         }
 
         lettreClean = placement_alphabet(fgetc(fichierClean));
@@ -89,6 +91,6 @@ int main(int argc, char * argv[]){
 
     
     
-    printf("%s",findKey(fichierC, fichierA));
+    printf("clef : %s\n",findKey(fichierC, fichierA));
 	return 0;
 }
