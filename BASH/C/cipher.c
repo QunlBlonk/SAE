@@ -4,7 +4,8 @@
 
 char alphabet_base64[64]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-int placement_alphabet(char lettre){ #Parcours du tableau pour retrouver l'indice de l'indice de la lettre recherchée
+#Parcours du tableau pour retrouver l'indice de l'indice de la lettre recherchée
+int placement_alphabet(char lettre){ 
 	
     int indice = 0;
     while (lettre != alphabet_base64[indice] && indice < 64){ 
@@ -13,15 +14,15 @@ int placement_alphabet(char lettre){ #Parcours du tableau pour retrouver l'indic
     if (lettre == alphabet_base64[indice]) return indice;
     else return -1;
 }
-
-void vigenere(char tableau[][64]){ #utilisation du tableau de vigenere pour les futurs cryptage et décryptage
+ #utilisation du tableau de vigenere pour les futurs cryptage et décryptage
+void vigenere(char tableau[][64]){
     for (int y = 0; y < 64; y++){
         for (int x = 0; x < 64; x++){
             tableau[y][x] = ((x + y) % 64) ;
         }
     }
 }
-
+#Affiche tous les lignes du tableau de la colonne x
 void ligne_tableau(int x, char tableau[][64]){
     for (int y = 0; y < 64; y++){
         printf("%c",alphabet_base64[tableau[y][x]]);
@@ -29,7 +30,7 @@ void ligne_tableau(int x, char tableau[][64]){
     printf("\n");
 }
 
-
+# Rajoute au nouveau nom de fichier un ensemble de caractères pour le différencier de celui d'origine
 char * rajout(char * mot, char * ajout){
     int atteint = 0;
     int i = 0; int j = 0; int k = 0; int point = 0;
@@ -42,7 +43,7 @@ char * rajout(char * mot, char * ajout){
     char * mot_final = (char *)calloc(taille_mot_final, sizeof(char));
     char * extension = (char *)calloc(20, sizeof(char));
 
-    for (i=0; i < taille_mot; i++){ #Vérification d'une présence possible d'un point dans l'ajout
+    for (i=0; i < taille_mot; i++){ # Vérification d'une présence possible d'un point dans l'ajout
         if (mot[i]=='.') {
             point=i;
         } 
@@ -64,7 +65,7 @@ char * rajout(char * mot, char * ajout){
     return mot_final;
 }
 
-
+#Chiffrement d'un fichier encodé en base 64 via une clef de chiffrement en passant par un tableau de vigenere
 void chiffrement(char * nom_fichier, char * clef, char tabVigenere[][64]){
     int longeurClef = strlen(clef);
 
