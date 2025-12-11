@@ -63,12 +63,13 @@ char * rajout(char * mot, char * ajout){
     return mot_final;
 }
 
+# Déchiffre un fichier chiffrer via la clef de déchiffrement, renvoyant un fichier encodé en base64
 void dechiffrement(char * nom_fichier, char * clef, char tabVigenere[][64]){
     int longeurClef = strlen(clef);
 
     FILE * fichier = fopen(nom_fichier, "r");
 	
-    char * nom_fichier_chiffrer = rajout(nom_fichier, "Decoder");
+    char * nom_fichier_chiffrer = rajout(nom_fichier, "Decoder"); #Rajoute le mot "Decoder" en fin de nom du fichier
     remove(nom_fichier_chiffrer);
     FILE * fichierClean=fopen(nom_fichier_chiffrer, "a");
 
