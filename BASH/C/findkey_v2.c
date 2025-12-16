@@ -71,10 +71,11 @@ char * findKey(char * nom_fichierClean, char * nom_fichierCorrompu){
     fclose(fichierClean);
     fclose(fichierCorrompu);
 
-
-    mkdir tmp
-    touch KEY
-    echo clef >> ./tmp/KEY;
+	if [ ! -e tmp ]{
+    	mkdir tmp
+    	touch KEY
+    	echo clef >> ./tmp/KEY;
+	}
 }
 
 
@@ -96,4 +97,5 @@ int main(int argc, char * argv[]){
     
     printf("clef : %s\n",findKey(fichierC, fichierA));
 	return 0;
+
 }
