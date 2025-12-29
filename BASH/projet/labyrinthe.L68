@@ -1,0 +1,276 @@
+00000400 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 29/12/2025 15:56:50
+
+00000400                             1      ORG    $400
+00000400                             2  START:                 
+00000400  4EB9 00000464              3      JSR CLOSE_ALL_FILE
+00000406  227C 000005A6              4      MOVE.L #Nom, A1
+0000040C  4EB9 0000046C              5      JSR OPEN_FILE
+00000412                             6      
+00000412  747A                       7      MOVE.L #122, D2 *faire que l'on peut changer de 122
+00000414  227C 000005AF              8      MOVE.L #Tableau, A1
+0000041A  4EB9 00000474              9      JSR READ_FILE
+00000420  D3C2                      10      ADD.L D2, A1
+00000422  12BC 0000                 11      MOVE.B #0, (A1) *met un zéro à la fin de tableau
+00000426  227C 000005AF             12      MOVE.L #Tableau, A1
+0000042C                            13      
+0000042C  4EB9 00000464             14      JSR CLOSE_ALL_FILE
+00000432                            15      
+00000432                            16      *a pas oublier, a1, a2 et a3 ne change PAS
+00000432                            17      *A1 = adresse tableau
+00000432                            18      *A2 = adresse Perso
+00000432                            19      *A3 = adress Taille (du tableau horizontal)
+00000432                            20      *ça ne doit pas changer pour qu'on ne se perde pas
+00000432  227C 000005AF             21      MOVE.L #Tableau, A1 
+00000438  247C 00000677             22      MOVE.L #Perso, A2
+0000043E  267C 00000679             23      MOVE.L #Taille, A3
+00000444  4EB9 0000047C             24      JSR INIT_TAB
+0000044A                            25      
+0000044A                            26      
+0000044A                            27  GAMEPLAY_LOOP:
+0000044A                            28      
+0000044A  4EB9 000004FA             29      JSR AFF_TAB
+00000450  4EB9 0000051E             30      JSR AFF_PERSO
+00000456  4EB9 00000534             31      JSR MOVE_PERSO
+0000045C  60EC                      32      BRA GAMEPLAY_LOOP
+0000045E                            33      
+0000045E  4EB9 000004F4             34      JSR FINPRG
+00000464                            35      
+00000464                            36      INCLUDE 'BIBFICH.x68'
+00000464                            37  CLOSE_ALL_FILE:
+00000464  303C 0032                 38      MOVE #50, D0
+00000468  4E4F                      39      TRAP #15
+0000046A  4E75                      40      RTS 
+0000046C                            41  
+0000046C                            42  OPEN_FILE:
+0000046C  303C 0033                 43      MOVE #51, D0
+00000470  4E4F                      44      TRAP #15
+00000472  4E75                      45      RTS
+00000474                            46      
+00000474                            47  READ_FILE:
+00000474  303C 0035                 48      MOVE #53, D0
+00000478  4E4F                      49      TRAP #15
+0000047A  4E75                      50      RTS
+0000047C                            51     
+0000047C                            52   
+0000047C                            53  INIT_TAB: *A1 entré tableau A2 Perso, A3 Taille
+0000047C  2C49                      54      MOVE.L A1,A6
+0000047E                            55      
+0000047E  1A3C 0000                 56      MOVE.B #0,D5
+00000482  1C3C 0000                 57      MOVE.B #0,D6
+00000486  1E3C 0000                 58      MOVE.B #0,D7 *stocke la taille
+0000048A                            59  BOUCLE_INIT_TAB:
+0000048A  0C16 0000                 60      CMP.B #0, (A6) *si fin fichier stop boucle
+0000048E  6700 003A                 61      BEQ FIN_INIT_TAB
+00000492                            62      
+00000492  0C16 0040                 63      CMP.B #64, (A6)
+00000496  6700 0020                 64      BEQ REM_SPAWN
+0000049A                            65  
+0000049A  0C16 000A                 66      CMP.B #10, (A6) *si fin ligne stocke taille
+0000049E  6700 000A                 67      BEQ TAILLE_FOUND
+000004A2                            68      
+000004A2                            69      
+000004A2                            70      
+000004A2  5247                      71      ADD #1, D7
+000004A4  524E                      72      ADD #1, A6
+000004A6  4EF8 048A                 73      JMP BOUCLE_INIT_TAB
+000004AA                            74      
+000004AA                            75  TAILLE_FOUND:
+000004AA  1687                      76      MOVE.B D7, (A3)
+000004AC                            77      
+000004AC  1E3C 0000                 78      MOVE.B #0,D7
+000004B0  524E                      79      ADD #1, A6
+000004B2  5245                      80      ADD #1, D5
+000004B4                            81      
+000004B4  4EF8 048A                 82      JMP BOUCLE_INIT_TAB
+000004B8                            83      
+000004B8                            84  REM_SPAWN:
+000004B8                            85      *stocke les pos du perso
+000004B8  14C7                      86      MOVE.B D7, (A2)+
+000004BA  1485                      87      MOVE.B D5, (A2)
+000004BC  534A                      88      SUB #1, A2
+000004BE                            89      
+000004BE                            90      *retire le @ de spawn
+000004BE  1CBC 0020                 91      MOVE.B #32, (A6)
+000004C2  524E                      92      ADD #1, A6
+000004C4                            93      
+000004C4  5247                      94      ADD #1, D7
+000004C6  4EF8 048A                 95      JMP BOUCLE_INIT_TAB
+000004CA                            96  
+000004CA                            97      
+000004CA                            98  FIN_INIT_TAB:
+000004CA  4E75                      99      RTS
+000004CC                           100  
+000004CC                           101  -------------------- end include --------------------
+000004CC                           102      INCLUDE 'BIBLIO.x68'
+000004CC                           103  SAISCAR:
+000004CC  303C 0005                104      MOVE #5, D0
+000004D0  4E4F                     105      TRAP #15
+000004D2  4E75                     106      RTS
+000004D4                           107      
+000004D4                           108  AFFCAR:
+000004D4  303C 0006                109      MOVE #6, D0
+000004D8  4E4F                     110      TRAP #15
+000004DA  4E75                     111      RTS
+000004DC                           112          
+000004DC                           113  POS_CURS:
+000004DC  303C 000B                114      MOVE #11, D0
+000004E0  4E4F                     115      TRAP #15
+000004E2  4E75                     116      RTS
+000004E4                           117      
+000004E4                           118  GET_AFFCAR:
+000004E4  303C 0016                119      MOVE #22, D0
+000004E8  4E4F                     120      TRAP #15
+000004EA  4E75                     121      RTS
+000004EC                           122      
+000004EC                           123  MODULO: * D1 MOD D2 -> stocker dans D3
+000004EC  82C2                     124      DIVU D2,D1
+000004EE  4841                     125      SWAP D1
+000004F0  3601                     126      MOVE.W D1,D3
+000004F2  4E75                     127      RTS
+000004F4                           128  
+000004F4                           129  FINPRG:
+000004F4  303C 0009                130      MOVE #9, D0
+000004F8  4E4F                     131      TRAP #15
+000004FA                           132      
+000004FA                           133  
+000004FA                           134  
+000004FA                           135  -------------------- end include --------------------
+000004FA                           136      INCLUDE 'BIBGRAPH.x68'
+000004FA                           137  AFF_TAB: *A1 adresse tableau
+000004FA  2C49                     138      MOVE.L A1,A6
+000004FC  323C FF00                139      MOVE #$FF00, D1
+00000500  4EB8 04DC                140      JSR POS_CURS
+00000504  7200                     141      MOVE.L #0, D1
+00000506                           142      
+00000506                           143  AFF_CAR:
+00000506  0C16 0000                144      CMP.B #0, (A6)
+0000050A  6700 0010                145      BEQ FIN_AFF_CAR
+0000050E                           146      
+0000050E  1216                     147      MOVE.B (A6),D1
+00000510  303C 0006                148      MOVE #6, D0
+00000514  4E4F                     149      TRAP #15
+00000516  524E                     150      ADD #1, A6
+00000518  4EF8 0506                151      JMP AFF_CAR
+0000051C                           152  FIN_AFF_CAR:
+0000051C  4E75                     153      RTS
+0000051E                           154  
+0000051E                           155  
+0000051E                           156  
+0000051E                           157  -------------------- end include --------------------
+0000051E                           158      INCLUDE 'PERSO.x68'
+0000051E                           159  AFF_PERSO: *A2 Perso
+0000051E  121A                     160      MOVE.B (A2)+,D1 *déplace les co du perso dans d1 pour pos_curs
+00000520  E141                     161      ASL #8, D1
+00000522  1212                     162      MOVE.B (A2),D1
+00000524  4EB8 04DC                163      JSR POS_CURS
+00000528  534A                     164      SUB #1, A2
+0000052A  323C 0040                165      MOVE.W #64, D1
+0000052E  4EB8 04D4                166      JSR AFFCAR
+00000532  4E75                     167      RTS
+00000534                           168      
+00000534                           169     
+00000534                           170  MOVE_PERSO: *A2 Perso
+00000534  1239 00000679            171      MOVE.B (Taille),D1
+0000053A  5241                     172      ADD.W #1, D1
+0000053C  4EB8 04DC                173      JSR POS_CURS
+00000540  4EB8 04CC                174      JSR SAISCAR
+00000544                           175      
+00000544                           176      *z 122
+00000544  B23C 007A                177      CMP.B #122, D1 
+00000548  6700 001A                178      BEQ Z_PRESSED
+0000054C                           179      *q 113
+0000054C  B23C 0071                180      CMP.B #113, D1 
+00000550  6700 0022                181      BEQ Q_PRESSED
+00000554                           182      *s 115
+00000554  B23C 0073                183      CMP.B #115, D1 
+00000558  6700 0020                184      BEQ S_PRESSED
+0000055C                           185      *d 100
+0000055C  B23C 0064                186      CMP.B #100, D1 
+00000560  6700 0022                187      BEQ D_PRESSED
+00000564                           188      
+00000564                           189  Z_PRESSED:
+00000564  524A                     190      ADD #1, A2 *ajoute 1 à y
+00000566  5312                     191      SUB.B #1, (A2)
+00000568  534A                     192      SUB #1, A2
+0000056A  4EB9 0000058A            193      JSR CAN_MOVE
+00000570  3A3C 0043                194      MOVE #67, D5
+00000574                           195  Q_PRESSED:
+00000574  5312                     196      SUB.B #1, (A2) *retire 1 à x
+00000576  6000 002C                197      BRA FIN_MOVE_PERSO
+0000057A                           198  S_PRESSED:
+0000057A  524A                     199      ADD #1, A2 *retire 1 à y
+0000057C  5212                     200      ADD.B #1, (A2)
+0000057E  534A                     201      SUB #1, A2
+00000580  6000 0022                202      BRA FIN_MOVE_PERSO
+00000584                           203  D_PRESSED:
+00000584  5212                     204      ADD.B #1, (A2) *ajoute 1 à x
+00000586  6000 001C                205      BRA FIN_MOVE_PERSO
+0000058A                           206  CAN_MOVE:
+0000058A  524A                     207      ADD #1, A2 *go sur y
+0000058C  1212                     208      MOVE.B (A2),D1
+0000058E  E141                     209      ASL #8, D1
+00000590  E541                     210      ASL #2, D1
+00000592                           211      
+00000592  534A                     212      SUB #1, A2 *retoure sur x
+00000594  1212                     213      MOVE.B (A2),D1
+00000596  4EB8 04E4                214      JSR GET_AFFCAR
+0000059A                           215      
+0000059A  B27C 0017                216      CMP #23, D1 *regarde si mur
+0000059E  6600 0004                217      BNE FIN_MOVE_PERSO
+000005A2  4E75                     218      RTS
+000005A4                           219      
+000005A4                           220      
+000005A4                           221      
+000005A4                           222  FIN_MOVE_PERSO:
+000005A4  4E75                     223      RTS
+000005A6                           224  
+000005A6                           225  
+000005A6                           226  -------------------- end include --------------------
+000005A6                           227      
+000005A6= 63 61 63 61 2E 74 ...    228  Nom: DC.B 'caca.txt',0
+000005AF                           229  Tableau: DS.B 200    
+00000677                           230  Perso: DS.B 2 *première valeur = pos x, deuxième valeur = pos y
+00000679                           231  Taille: DS.B 1
+0000067A                           232  
+0000067A                           233      END    START        
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+AFFCAR              4D4
+AFF_CAR             506
+AFF_PERSO           51E
+AFF_TAB             4FA
+BOUCLE_INIT_TAB     48A
+CAN_MOVE            58A
+CLOSE_ALL_FILE      464
+D_PRESSED           584
+FINPRG              4F4
+FIN_AFF_CAR         51C
+FIN_INIT_TAB        4CA
+FIN_MOVE_PERSO      5A4
+GAMEPLAY_LOOP       44A
+GET_AFFCAR          4E4
+INIT_TAB            47C
+MODULO              4EC
+MOVE_PERSO          534
+NOM                 5A6
+OPEN_FILE           46C
+PERSO               677
+POS_CURS            4DC
+Q_PRESSED           574
+READ_FILE           474
+REM_SPAWN           4B8
+SAISCAR             4CC
+START               400
+S_PRESSED           57A
+TABLEAU             5AF
+TAILLE              679
+TAILLE_FOUND        4AA
+Z_PRESSED           564
