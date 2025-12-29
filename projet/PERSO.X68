@@ -1,5 +1,5 @@
 AFF_PERSO: *A2 Perso
-    MOVE.B (A2)+,D1
+    MOVE.B (A2)+,D1 *déplace les co du perso dans d1 pour pos_curs
     ASL #8, D1
     MOVE.B (A2),D1
     JSR POS_CURS
@@ -29,28 +29,37 @@ MOVE_PERSO: *A2 Perso
     BEQ D_PRESSED
     
 Z_PRESSED:
-    ADD #1, A2
+    ADD #1, A2 *ajoute 1 à y
     SUB.B #1, (A2)
-    BRA CAN_MOVE
+    SUB #1, A2
+    JSR CAN_MOVE
+    MOVE #67, D5
 Q_PRESSED:
-    SUB.B #1, (A2)
+    SUB.B #1, (A2) *retire 1 à x
     BRA FIN_MOVE_PERSO
 S_PRESSED:
-    ADD #1, A2
+    ADD #1, A2 *retire 1 à y
     ADD.B #1, (A2)
     SUB #1, A2
     BRA FIN_MOVE_PERSO
 D_PRESSED:
-    ADD.B #1, (A2)
+    ADD.B #1, (A2) *ajoute 1 à x
     BRA FIN_MOVE_PERSO
 CAN_MOVE:
+    ADD #1, A2 *go sur y
+    MOVE.B (A2),D1
+    ASL #8, D1 *pb ici, j'arrive pas à déplace au 16 ème bits
+    ASL #2, D1
+    
+    SUB #1, A2 *retoure sur x
+    MOVE.B (A2),D1
+    JSR GET_AFFCAR
+    
+    CMP #23, D1 *regarde si mur
+    BNE FIN_MOVE_PERSO
+    RTS
     
     
     
 FIN_MOVE_PERSO:
     RTS
-
-*~Font name~Courier New~
-*~Font size~10~
-*~Tab type~1~
-*~Tab size~4~
