@@ -1,0 +1,30 @@
+00000400 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 29/11/2025 01:25:15
+
+00000000                             1  CLOSE_ALL_FILE:
+00000000  303C 0032                  2      MOVE #50, D0
+00000004  4E4F                       3      TRAP #15
+00000006  4E75                       4      RTS 
+00000008                             5  
+00000008                             6  OPEN_FILE:
+00000008  303C 0033                  7      MOVE #51, D0
+0000000C  4E4F                       8      TRAP #15
+0000000E  4E75                       9      RTS
+00000010                            10      
+00000010                            11  READ_FILE:
+00000010  303C 0035                 12      MOVE #53, D0
+00000014  4E4F                      13      TRAP #15
+00000016  4E75                      14      RTS
+Line 15 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CLOSE_ALL_FILE      0
+OPEN_FILE           8
+READ_FILE           10
