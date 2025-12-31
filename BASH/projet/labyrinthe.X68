@@ -8,7 +8,7 @@ START:
     MOVE.L #Tableau, A1
     JSR READ_FILE
     ADD.L D2, A1
-    MOVE.B #0, (A1) *met un zÈro ‡ la fin de tableau
+    MOVE.B #0, (A1) *met un z√©ro √† la fin de tableau
     MOVE.L #Tableau, A1
     
     JSR CLOSE_ALL_FILE
@@ -17,7 +17,7 @@ START:
     *A1 = adresse tableau
     *A2 = adresse Perso
     *A3 = adress Taille (du tableau horizontal)
-    *Áa ne doit pas changer pour qu'on ne se perde pas
+    *√ßa ne doit pas changer pour qu'on ne se perde pas
     MOVE.L #Tableau, A1 
     MOVE.L #Perso, A2
     MOVE.L #Taille, A3
@@ -25,7 +25,10 @@ START:
     
     
 GAMEPLAY_LOOP:
-    
+    MOVE.L #Tableau, A1 
+    MOVE.L #Perso, A2
+    MOVE.L #Taille, A3
+
     JSR AFF_TAB
     JSR AFF_PERSO
     JSR MOVE_PERSO
@@ -40,7 +43,7 @@ GAMEPLAY_LOOP:
     
 Nom: DC.B 'caca.txt',0
 Tableau: DS.B 200    
-Perso: DS.B 2
+Perso: DS.B 2 *premi√®re valeur = pos x, deuxi√®me valeur = pos y
 Taille: DS.B 1
 
     END    START        
@@ -50,7 +53,4 @@ Taille: DS.B 1
 
 
 
-*~Font name~Courier New~
-*~Font size~10~
-*~Tab type~1~
-*~Tab size~4~
+
