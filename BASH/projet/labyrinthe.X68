@@ -25,7 +25,7 @@ START:
     
     
 GAMEPLAY_LOOP:
-    MOVE.L #Tableau, A1 
+    MOVE.L #Tableau, A1 *on s'assure que les adresses sont toujours les premièers pour que chaque programme est une base similaire
     MOVE.L #Perso, A2
     MOVE.L #Taille, A3
 
@@ -47,6 +47,7 @@ Perso: DS.B 2 *première valeur = pos x, deuxième valeur = pos y
 Taille: DS.B 1
 
     END    START        
+
 
 
 
