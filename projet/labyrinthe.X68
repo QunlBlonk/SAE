@@ -1,6 +1,7 @@
-    ORG    $400
+  ORG    $400
 START:                 
     JSR CLOSE_ALL_FILE
+    MOVE.L #0,D6 *temps de base étant de 0, on le stocke ici
     MOVE.L #Nom, A1
     JSR OPEN_FILE
     
@@ -8,7 +9,7 @@ START:
     MOVE.L #Tableau, A1
     JSR READ_FILE
     ADD.L D2, A1
-    MOVE.B #0, (A1) *met un zéro à la fin de tableau
+    MOVE.B #0, (A1) *met un zÃ©ro Ã  la fin de tableau
     MOVE.L #Tableau, A1
     
     JSR CLOSE_ALL_FILE
@@ -17,7 +18,7 @@ START:
     *A1 = adresse tableau
     *A2 = adresse Perso
     *A3 = adress Taille (du tableau horizontal)
-    *ça ne doit pas changer pour qu'on ne se perde pas
+    *Ã§a ne doit pas changer pour qu'on ne se perde pas
     MOVE.L #Tableau, A1 
     MOVE.L #Perso, A2
     MOVE.L #Taille, A3
@@ -29,8 +30,14 @@ GAMEPLAY_LOOP:
     JSR AFF_TAB
     JSR AFF_PERSO
     JSR MOVE_PERSO
+    ADD.L #1, D6
     BRA GAMEPLAY_LOOP
     
+    
+    MOVE.L #Score, D1
+    JSR OPEN_FILE
+    MOVE.L D6, A1
+    JSR WRITE_FILE
     JSR FINPRG
     
     INCLUDE 'BIBFICH.x68'
@@ -39,11 +46,13 @@ GAMEPLAY_LOOP:
     INCLUDE 'PERSO.x68'
     
 Nom: DC.B 'caca.txt',0
+Score: DC.B 'temps.txt',0
 Tableau: DS.B 200    
-Perso: DS.B 2 *première valeur = pos x, deuxième valeur = pos y
+Perso: DS.B 2 *premiÃ¨re valeur = pos x, deuxiÃ¨me valeur = pos y
 Taille: DS.B 1
 
     END    START        
+
 
 
 
