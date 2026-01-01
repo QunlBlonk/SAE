@@ -12,9 +12,14 @@ READ_FILE:
     MOVE #53, D0
     TRAP #15
     RTS
+    
+WRITE_FILE:
+    MOVE #54, D0
+    TRAP #15
+    RTS
    
  
-INIT_TAB: *A1 entré tableau A2 Perso, A3 Taille
+INIT_TAB: *A1 entrÃ© tableau A2 Perso, A3 Taille
     MOVE.L A1,A6
     
     MOVE.B #0,D5
@@ -66,3 +71,4 @@ FIN_INIT_TAB:
 *~Font size~10~
 *~Tab type~1~
 *~Tab size~4~
+
