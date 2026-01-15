@@ -1,0 +1,98 @@
+Bonjour dans ce petit README des fichiers
+si vous avez des doutes sur l'un des programmes, des commentaires sont aussi présents dans chaque fichiers
+
+SOMMAIRE:
+1. innit-toolbox.sh (12 - 22)
+2. imports-archive.sh (25 - 39)
+3. ls-toolbox.sh (41 - 54)
+4. restore-toolbox.sh (56 - 64)
+5. check-archive.sh (66 - 89)
+
+============================================================================================================================================================
+
+1. innit-toolbox.sh
+"innit-toolbox.sh sert à initialiser l'environnment pour une bonne utilisation des autres fichiers.
+Il s'assure que .sh-toolbox (le dossier dans lequel les archives sont stoqués)
+et archives (le fichier dans lequel on stoques toutes les reférences au fichier/dossier stoqués dans .sh-toolbox)
+soient bien présentes et sinon les créer"
+
+EXIT:
+0 si le dossier et/ou le fichier a été créé avec succès
+0 si le dossier existe déjà et qu’il contient le fichier .archives
+1 si le dossier et/ou le fichier n’a pas pu être créé
+2 si le dossier contient d’autres fichiers (avec ou sans dossiers)
+
+============================================================================================================================================================
+
+2. imports-archive.sh [option] fichier
+"imports-archive.sh permet d'importer des archives, on donnes en paramètres le ou les fichiers que l'on veut archivés
+si ils ne sont pas déjà archivés, ils sont copiés dans .sh-toolbox
+sinon on demande à l'utilisateur si il veut tout de même copier en écrasant l'archives précédentes
+une fois copier, on rajoute la mention dans le fichier archives."
+
+OPTION:
+-f : force les copie des archives passé en paramètre après le -f
+exemple1 : ./imports-archive.sh -f fichier1 fichier2
+(tous les dossier passer en paramètres sont forcer)
+exemple2 : ./imports-archive.sh fichier1 -f fichier2
+(seulement le fichier2 sera forcer)
+
+EXIT:
+0 si la copie a été faite
+0 si la copie a été annulée (l’utilisateur répond « non » à la demande de confirmation)
+1 si le dossier .sh-toolbox n’existe pas
+2 si l’archive n’existe pas au chemin passé en paramètre
+3 si un problème a eu lieu au moment de la copie
+4 si un problème a eu lieu à la mise à jour du fichier .archives
+
+============================================================================================================================================================
+
+3. ls-toolbox.sh
+"ls-toolbox.sh affiche toutes les mentions d'archives du fichier archives et si ils possèdent une clef.
+ls-toolbox.sh sert aussi à savoir si un problème est présent :
+soit une mention d'archives existe sans que l'archives soit stoqués
+soit une archives est présentes dans .sh-toolbox mais il n'y a aucune mention dans le ficheir archives.
+soit .sh-toolbox n'existe pas
+soit le fichier archives n'existe pas"
+
+EXIT:
+0 si la liste a été affichée sans erreur
+1 si le dossier .sh-toolbox n’existe pas
+2 si le fichier archives n’existe pas
+3 si une archive mentionnée dans le fichier archives n’existe pas
+3 si une archive existe sans être mentionnée dans le fichier archives
+
+============================================================================================================================================================
+
+4. restore-toolbox.sh
+"restore-toolbox.sh est en quelque sort similaire à innit-toolbox.sh. Il sert à rénitialiser et corriger tout les problèmes
+demande de créer .sh-toolbox si il n'existe pas
+demande de créer le fichiers archives si il n'existe pas
+demande si il veut mentionner une archive présentes dans le dossier .sh-toolbox mais pas mentionnés dans le fichier archive
+demande si il veut relier une mention déjà présente avec un dossier du même nom
+sinon si il veut supprimer la mention d'une archive qui n'est pas présentes dans le dossier .sh-toolbox
+et s'assure que le nombre en début du fichiers archives correspondent bien au nombre de mentions"
+
+EXIT:
+0 tout ces bien passé
+
+============================================================================================================================================================
+
+5. check-archive.sh
+"check-archive.sh permet de trouver les fichiers attaqués et ce toujours sains.
+en début on demande qu'elle archive on veut décomprésés
+si elle est décompressable (.tar.gz) alros on la décompresse dans un dossier temporaire temp
+si temp existe déjà on demande si l'utilisateur veut le supprimer pour le recréer
+une fois le dossier décompréssés on regarde quand l'attaque a été effecuté (dernière connexion de admin)
+puis on affiche tout les dossiers qui ont était modifiés après la date de l'attaque"
+
+EXIT:
+0 si toutes les opérations ont réussies
+1 si le dossier .sh-toolbox n’existe pas
+2 si le fichier archives n’existe pas
+3 si la décompression a échoué
+4 si le fichier des logs est manquant
+5 si le dossier de données est vide
+6 si le fichier que l'utilisateur veut décomprésé n'est pas un .tar.gz
+7 si il y a 0 archives mentionner dans le fichier archive
+8 si il n'y a aucun fichier intact trouver
